@@ -1,10 +1,9 @@
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+package requeteBdd;
 
-public class requeteBdd {
-    public static ResultSet displayData(Connection con) throws SQLException, ClassNotFoundException{
+import java.sql.*;
+
+public class requeteBddAdministrateur {
+    public static ResultSet displayDataAdministrateur(Connection con) throws SQLException, ClassNotFoundException{
         Statement statement = con.createStatement();
 
         //Display all
@@ -21,4 +20,6 @@ public class requeteBdd {
         return result;
 
     }
+
+
 }

@@ -1,12 +1,13 @@
 
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import requeteBdd.requeteBddAdministrateur;
+import requeteBdd.requeteBddClasse;
+import requeteBdd.requeteBddEtudiant;
 
 import java.io.IOException;
 import java.sql.*;
@@ -39,11 +40,25 @@ public class Main extends Application {
                 System.out.println("Pas de connection");
             }
 
-            ResultSet resultSet = requeteBdd.displayData(con);
+            ResultSet resultSet = requeteBddAdministrateur.displayDataAdministrateur(con);
             System.out.println("ResultSet " + resultSet.getString("nom"));
             Label label = new Label(resultSet.getString("nom"));
             root.add(label,0,1);
 
+            //SCRUD ELEVE
+            //requeteBdd.requeteBdd.addEleve(con, "test", "test", "test.test@gmail.com", 1);
+            //requeteBdd.requeteBdd.deleteEleve(con, 1);
+            //requeteBdd.requeteBdd.updateEleve(con, "Coucou", "Coucou", "coucou.cou@..", 3);
+            //requeteBddEtudiant.displayEleve(con);
+
+            //CRUD CLASSE
+            //requeteBddClasse.displayClasse(con);
+            //requeteBddClasse.addClasse(con, "RIL");
+            //requeteBddClasse.deleteClasse(con, 1);
+            //requeteBddClasse.updateClasse(con, "Test", 2);
+            requeteBddClasse.displayEleveClasse(con, 2);
+
+            connexionBdd.closeConnection(con);
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -12,8 +12,11 @@ public class connexionBdd {
         Properties prop = new Properties();
         FileInputStream input = new FileInputStream("C:/Users/Meunier/IdeaProjects/RIL_TP_Student/src/main/resources/config.properties");
         prop.load(input);
-        //input.close();
         return prop;
+    }
+
+    public static void closeConnection(Connection con) throws SQLException {
+        con.close();
     }
 
 
