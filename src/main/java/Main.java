@@ -1,11 +1,16 @@
 
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,6 +21,52 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception, SQLException {
+        primaryStage.setTitle("Connection");
+        primaryStage.setWidth(150);
+        primaryStage.setHeight(150);
+
+        GridPane root = new GridPane();
+
+        Label lbnMail = new Label("Identifiant : ");
+        root.add(lbnMail, 0, 1);
+
+        TextField txtFieldMail = new TextField();
+        root.add(txtFieldMail,1,1);
+
+        Label lbnPwd = new Label("Mot de Passe : ");
+        root.add(lbnPwd, 0, 2);
+
+        TextField txtFieldPwd = new TextField();
+        root.add(txtFieldPwd,1,2);
+
+        Button btnSubmit = new Button("Connection");
+        TextField txt = new TextField();
+        btnSubmit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage newWindow = new Stage();
+                newWindow.setTitle("Second Stage");
+
+                Label secondLabel = new Label(txtFieldMail.getText());
+
+                GridPane secondaryLayout = new GridPane();
+                secondaryLayout.add(secondLabel,0,0);
+
+                // New window (Stage)
+
+                newWindow.setScene(new Scene(secondaryLayout, 230, 100));
+
+                newWindow.show();
+            }
+        });
+
+        root.add(btnSubmit,1,3);
+
+        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.show();
+
+
+        /*
         Connection con = null;
         GridPane root = new GridPane();
         primaryStage.setTitle("Hello World");
@@ -64,7 +115,7 @@ public class Main extends Application {
 
 
         primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
+        primaryStage.show();*/
     }
 
 

@@ -10,7 +10,7 @@ import java.util.Properties;
 public class connexionBdd {
     public static Properties loadPropertiesFiles() throws Exception{
         Properties prop = new Properties();
-        FileInputStream input = new FileInputStream("C:/Users/Meunier/IdeaProjects/RIL_TP_Student/src/main/resources/config.properties");
+        FileInputStream input = new FileInputStream("D:/CESI Le Mans/23 - Module 23 Java avancer/tp_student/src/main/resources/config.properties");
         prop.load(input);
         //input.close();
         return prop;
