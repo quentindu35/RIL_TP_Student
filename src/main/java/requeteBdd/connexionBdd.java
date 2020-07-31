@@ -1,6 +1,7 @@
 package requeteBdd;
 
 import Vues.pageAccueil;
+import Vues.pageEtudiant;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -17,7 +18,7 @@ public class connexionBdd {
     static Connection con;
     public static Connection connectionDB() throws SQLException, ClassNotFoundException, IOException {
         Properties prop = new Properties();
-        FileInputStream input = new FileInputStream("C:/Users/Meunier/IdeaProjects/RIL_TP_Student/src/main/resources/config.properties");
+        FileInputStream input = new FileInputStream("D:/CESI Le Mans/23 - Module 23 Java avancer/tp_student/src/main/resources/config.properties");
         prop.load(input);
         String dname = (String) prop.get ("db.driver");
         String url = (String) prop.get ("db.url");
@@ -38,7 +39,9 @@ public class connexionBdd {
         Connection con = connexionBdd.connectionDB();
 
         PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement2;
         ResultSet resultSet;
+        ResultSet resultSet2;
         Stage dialogStage ;
 
         // Get values's inputs (TextFlied) email/password
@@ -46,6 +49,7 @@ public class connexionBdd {
         String password = mdp.getText();
 
         String sql = "SELECT * FROM administrateur Where mail = ? and mdp = ?";
+        String sql2 = "SELECT * FROM etudiant WHERE mail = ? AND mdp = ?";
 
         try{
             preparedStatement = con.prepareStatement(sql);
@@ -53,17 +57,30 @@ public class connexionBdd {
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
 
-            if(!resultSet.next()){
-                infoBox("L'email et/ou l'identifiant sont incorrects", null, "Echec");
+            preparedStatement2 = con.prepareStatement(sql2);
+            preparedStatement2.setString(1, email);
+            preparedStatement2.setString(2, password);
+            resultSet2 = preparedStatement2.executeQuery();
 
-            }else{
-                infoBox("Vous êtes connectés !",null,"Connexion réussie" );
-                Node node = (Node)event.getSource();
+            if(resultSet.next()) {
+                infoBox("Vous êtes connectés !", null, "Connexion réussie");
+                Node node = (Node) event.getSource();
                 dialogStage = (Stage) node.getScene().getWindow();
                 dialogStage.close();
 
                 // Page Accueil
                 pageAccueil.display();
+            } else if(resultSet2.next()){
+                infoBox("Vous êtes connectés !", null, "Connexion réussie");
+                Node node = (Node) event.getSource();
+                dialogStage = (Stage) node.getScene().getWindow();
+                dialogStage.close();
+
+                // Page Etudiant
+                pageEtudiant.display(resultSet2);
+
+            }else{
+                infoBox("L'email et/ou l'identifiant sont incorrects", null, "Echec");
             }
         }
         catch(Exception e){
