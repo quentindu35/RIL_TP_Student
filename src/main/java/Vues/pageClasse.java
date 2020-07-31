@@ -52,11 +52,11 @@ public class pageClasse {
                 try {
                     requeteBddClasse.addClasse(con, nomField);
                     connexionBdd.infoBox("La création a bien été prise en compte",null,"Ok");
-                    Node node = (Node)e.getSource();
+                    Node n = (Node)e.getSource();
                     listView.getSelectionModel().clearSelection();
                     listView.getItems().clear();
                     requeteBddClasse.displayClasse(con, listView);
-                    addStage[0] = (Stage) node.getScene().getWindow();
+                    addStage[0] = (Stage) n.getScene().getWindow();
                     addStage[0].close();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();

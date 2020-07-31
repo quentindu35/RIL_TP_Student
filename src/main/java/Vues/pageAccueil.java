@@ -19,8 +19,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static Vues.pageClasse.pageAdd;
-import static requeteBdd.requeteBddClasse.deleteClasse;
-import static requeteBdd.requeteBddClasse.displayEleveClasse;
+import static requeteBdd.requeteBddClasse.*;
 
 public class pageAccueil {
     public static ListView<String> listView = new ListView<>();
