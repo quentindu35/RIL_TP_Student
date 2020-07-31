@@ -27,8 +27,46 @@ public class Main extends Application {
         primaryStage.setTitle("Connection");
         primaryStage.setWidth(150);
         primaryStage.setHeight(150);
-
+        // Nouvelle grille
         GridPane root = new GridPane();
+
+        // Connection a la Base de donnée
+        Connection con = null;
+
+        try {
+            Properties prop = connexionBdd.loadPropertiesFiles();
+            String url = (String) prop.get("db.url");
+            String userName = (String) prop.get("db.userName");
+            String password = (String) prop.get("db.password");
+            String driver = (String) prop.get("db.driver");
+
+            System.out.println("Driver : " + driver);
+            Class.forName(driver);
+
+            con = DriverManager.getConnection(url, userName, password);
+
+            if (con != null) {
+                System.out.println("Connection créée");
+
+            } else {
+                System.out.println("Pas de connection");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if(con != null){
+                    con.close();
+                }
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
 
         Label lbnMail = new Label("Identifiant : ");
         root.add(lbnMail, 0, 1);
@@ -44,6 +82,10 @@ public class Main extends Application {
 
         Button btnSubmit = new Button("Connection");
         TextField txt = new TextField();
+
+        requeteBddAdministrateur.displayConnectionAdmin(con,txtFieldMail.getText(), txtFieldPwd.getText());
+
+
         btnSubmit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -67,7 +109,6 @@ public class Main extends Application {
 
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
-
 
         /*
         Connection con = null;

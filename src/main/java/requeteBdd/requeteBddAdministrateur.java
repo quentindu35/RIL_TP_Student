@@ -4,22 +4,29 @@ import java.sql.*;
 
 public class requeteBddAdministrateur {
     public static ResultSet displayDataAdministrateur(Connection con) throws SQLException, ClassNotFoundException{
-        Statement statement = con.createStatement();
+        String query = "SELECT * FROM administrateur";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
 
-        //Display all
 
-        ResultSet result = statement.executeQuery("Select * from administrateur");
-        if (result.next() == false) { System.out.println("La table est vide "); }
-       /* System.out.println("result "+ result.next());
-        while (result.next()){*/
+        while (rs.next())
+        {
+            int id = rs.getInt("id_administrateur");
+            String nom = rs.getString("nom");
 
-        System.out.println("nom : " + result.getString("prenom"));
-        System.out.println("-----------------------");
-        /*}*/
-
-        return result;
-
+            // print the result
+            System.out.format("%s, %s\n", id, nom);
+        }
+        return rs;
     }
 
+    public static void displayConnectionAdmin(Connection con, String mail, String mdp) throws SQLException, ClassNotFoundException{
+        String query = "SELECT * FROM administrateur WHERE mail = ? AND mdp = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1,mail);
+        ps.setString(2,mdp);
+        ps.executeUpdate();
+
+    }
 
 }
