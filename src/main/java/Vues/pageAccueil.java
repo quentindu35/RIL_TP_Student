@@ -11,6 +11,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 public class pageAccueil {
     public static void display(){
         // New scene
@@ -24,6 +27,16 @@ public class pageAccueil {
         bt1.setStyle("-fx-background-color: #3c9a1a; -fx-text-fill: white;");
         Button bt2 = new Button("Supprimer");
         bt2.setStyle("-fx-background-color: #ee3737; -fx-text-fill: white;");
+
+        bt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                try {
+                    pageModificationClasse.display();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        });
 
         VBox vBox = new VBox(bt,bt1,bt2);
         vBox.setSpacing(10);
@@ -41,6 +54,8 @@ public class pageAccueil {
         bt4.setStyle("-fx-background-color: #3c9a1a; -fx-text-fill: white;");
         Button bt5 = new Button("Supprimer");
         bt5.setStyle("-fx-background-color: #ee3737; -fx-text-fill: white;");
+
+
 
         VBox vBox2 = new VBox(bt3,bt4,bt5);
         vBox2.setSpacing(10);
