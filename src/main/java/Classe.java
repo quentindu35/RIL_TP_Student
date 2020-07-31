@@ -34,4 +34,13 @@ public class Classe {
     public void setListEtudiant(List<Etudiant> listEtudiant) {
         this.listEtudiant = listEtudiant;
     }
+
+    @Override
+    public String toString() {
+        return "Classe{" +
+                "id_classe=" + id_classe +
+                ", nom='" + nom + '\'' +
+                ", listEtudiant=" + listEtudiant +
+                '}';
+    }
 }

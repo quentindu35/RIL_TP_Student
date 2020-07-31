@@ -1,4 +1,4 @@
-
+package requeteBdd;
 
 import Vues.pageAccueil;
 import Vues.pageEtudiant;
@@ -97,6 +97,7 @@ public class connexionBdd {
         alert.setHeaderText(headerText);
         alert.showAndWait();
     }
+
 
 
 }

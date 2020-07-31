@@ -1,27 +1,22 @@
 
 
 
-import Vues.pageAccueil;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import requeteBdd.connexionBdd;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.util.Properties;
 
 
 public class Main extends Application {
