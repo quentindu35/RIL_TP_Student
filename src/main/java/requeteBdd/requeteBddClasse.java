@@ -52,7 +52,6 @@ public class requeteBddClasse {
         }
         System.out.println("-------------------------------------------");
         System.out.println(id + " " + nom);
-        pageModificationClasse.display(id,nom);
 
     }
 
