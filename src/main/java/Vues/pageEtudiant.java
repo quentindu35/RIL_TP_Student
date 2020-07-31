@@ -1,14 +1,26 @@
 package Vues;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import requeteBdd.connexionBdd;
+import requeteBdd.requeteBddClasse;
 
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static Vues.pageAccueil.listView;
+import static Vues.pageAccueil.listView2;
 
 public class pageEtudiant {
     public static void display(ResultSet ResultSet) throws SQLException {
@@ -43,4 +55,7 @@ public class pageEtudiant {
         secondaryStage.show();
 
     }
+
+
+
 }
