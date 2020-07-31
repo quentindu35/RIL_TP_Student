@@ -1,6 +1,7 @@
 package requeteBdd;
 
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 import java.sql.*;
 
@@ -27,7 +28,7 @@ public class requeteBddClasse {
 
     }
 
-    public static void addClasse(Connection con, String nom) throws SQLException, ClassNotFoundException{
+    public static void addClasse(Connection con, TextField nom) throws SQLException, ClassNotFoundException{
 
         // the mysql insert statement
         String query = " insert into classe (nom)"
@@ -35,7 +36,7 @@ public class requeteBddClasse {
 
         // create the mysql insert preparedstatement
         PreparedStatement preparedStmt = con.prepareStatement(query);
-        preparedStmt.setString (1, nom);
+        preparedStmt.setString (1, nom.getText());
 
         // execute the preparedstatement
         preparedStmt.execute();

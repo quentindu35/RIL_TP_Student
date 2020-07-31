@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static Vues.pageClasse.pageAdd;
 import static requeteBdd.requeteBddClasse.deleteClasse;
 import static requeteBdd.requeteBddClasse.displayEleveClasse;
 
@@ -31,6 +32,8 @@ public class pageAccueil {
         Group root = new Group();
         Scene scene = new Scene(root, 800, 600, Color.LIGHTGRAY);
 
+        Button bt3 = new Button("Créer");
+        bt3.setStyle("-fx-background-color: #04b0ff; -fx-text-fill: #ffffff;");
         Button bt = new Button("Modifer");
         bt.setStyle("-fx-background-color: #ff8e04; -fx-text-fill: white;");
         Button bt1 = new Button("Afficher ");
@@ -38,7 +41,7 @@ public class pageAccueil {
         Button bt2 = new Button("Supprimer");
         bt2.setStyle("-fx-background-color: #ee3737; -fx-text-fill: white;");
 
-        VBox vBox = new VBox(bt,bt1,bt2);
+        VBox vBox = new VBox(bt3, bt,bt1,bt2);
         vBox.setSpacing(10);
         vBox.setLayoutX(300);
 
@@ -51,7 +54,10 @@ public class pageAccueil {
 
 
         Connection con = connexionBdd.connectionDB();
+
+
         requeteBddClasse.displayClasse(con, listView);
+
 
         bt2.setOnAction(e -> {
             try {
@@ -81,6 +87,18 @@ public class pageAccueil {
                 classNotFoundException.printStackTrace();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
+            }
+        });
+
+        bt3.setOnAction(e -> {
+            try {
+                pageAdd();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } catch (ClassNotFoundException classNotFoundException) {
+                classNotFoundException.printStackTrace();
             }
         });
 
@@ -124,6 +142,7 @@ public class pageAccueil {
     }
 
     private static void buttonClickedDisplay() throws SQLException, ClassNotFoundException, IOException {
+
         listView2.setVisible(true);
         String message = "";
         ObservableList<String> classes;
@@ -137,6 +156,7 @@ public class pageAccueil {
         String mes = "\""+message+"\"";
         System.out.println(mes);
         displayEleveClasse(con,mes);
+
 
     }
 
