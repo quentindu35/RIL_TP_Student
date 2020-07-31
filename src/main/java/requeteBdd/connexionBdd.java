@@ -1,4 +1,4 @@
-
+package requeteBdd;
 
 import Vues.pageAccueil;
 import javafx.event.ActionEvent;
@@ -80,6 +80,7 @@ public class connexionBdd {
         alert.setHeaderText(headerText);
         alert.showAndWait();
     }
+
 
 
 }
