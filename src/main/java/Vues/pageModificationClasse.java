@@ -3,6 +3,7 @@ package Vues;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,12 +12,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import requeteBdd.connexionBdd;
+import requeteBdd.requeteBddClasse;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static Vues.pageAccueil.listView;
 import static requeteBdd.requeteBddClasse.ClasseByName;
 import static requeteBdd.requeteBddClasse.updateClasse;
 
@@ -24,7 +27,7 @@ public class pageModificationClasse {
     public static void display(String Id, String nomClasse) throws SQLException {
 
         // New scene
-        Stage secondaryStage = new Stage();
+        final Stage[] thirdlyStage = {new Stage()};
         // New Grid
         GridPane root = new GridPane();
         // New Scene
@@ -64,6 +67,13 @@ public class pageModificationClasse {
                     // deleteClasse(con, mes);
                     updateClasse(con,mes,idClasse);
 
+                    connexionBdd.infoBox("La modification a bien été prise en compte",null,"Ok");
+                    Node n = (Node)e.getSource();
+                    listView.getSelectionModel().clearSelection();
+                    listView.getItems().clear();
+                    requeteBddClasse.displayClasse(con, listView);
+                    thirdlyStage[0] = (Stage) n.getScene().getWindow();
+                    thirdlyStage[0].close();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 } catch (IOException ioException) {
@@ -75,9 +85,8 @@ public class pageModificationClasse {
         });
         root.add(bt,1,3);
 
-        secondaryStage.setScene(scene);
-        secondaryStage.setTitle("Bienvenue");
-        secondaryStage.show();
-
+        thirdlyStage[0].setScene(scene);
+        thirdlyStage[0].setTitle("Bienvenue");
+        thirdlyStage[0].show();
     }
 }

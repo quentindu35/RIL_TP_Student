@@ -43,7 +43,6 @@ public class pageAccueil {
         VBox vBox = new VBox(bt3, bt,bt1,bt2);
         vBox.setSpacing(10);
         vBox.setLayoutX(300);
-
         bt.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 try {
@@ -60,9 +59,10 @@ public class pageAccueil {
 
                     String mes = "\""+message+"\"";
                     System.out.println(mes);
-                    // deleteClasse(con, mes);
                     ClasseByName(con,mes);
-
+                    listView.getSelectionModel().clearSelection();
+                    listView.getItems().clear();
+                    requeteBddClasse.displayClasse(con, listView);
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 } catch (IOException ioException) {
