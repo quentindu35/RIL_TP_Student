@@ -5,6 +5,8 @@ import javafx.scene.control.ListView;
 
 import java.sql.*;
 
+import static Vues.pageAccueil.listView2;
+
 public class requeteBddClasse {
 
     public static void displayClasse(Connection con, ListView<String> listView) throws SQLException, ClassNotFoundException{
@@ -94,8 +96,8 @@ public class requeteBddClasse {
 
     }
 
-    public static void displayEleveClasse(Connection con, int id_classe) throws SQLException, ClassNotFoundException{
-        String query = "SELECT distinct(classe.nom), etudiant.* FROM classe inner join etudiant on classe.id_classe = etudiant.id_classe where classe.id_classe = " + id_classe;
+    public static void displayEleveClasse(Connection con, String classe) throws SQLException, ClassNotFoundException{
+        String query = "SELECT distinct(classe.nom), etudiant.* FROM classe inner join etudiant on classe.id_classe = etudiant.id_classe where classe.nom = " + classe;
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(query);
 
@@ -104,12 +106,12 @@ public class requeteBddClasse {
         while (rs.next())
         {
             String nom = rs.getString("etudiant.nom");
-            String nomClasse = rs.getString("classe.nom");
+            //String nomClasse = rs.getString("classe.nom");
 
             // print the result
-            System.out.format("Pour la classe %s", nomClasse);
-            System.out.format("%s, %s\n", id_classe, nom);
-
+            //System.out.format("Pour la classe %s", nomClasse);
+            System.out.format("%s\n",nom);
+            listView2.getItems().add(nom);
         }
 
 

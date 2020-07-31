@@ -16,14 +16,15 @@ import requeteBdd.requeteBddClasse;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static requeteBdd.requeteBddClasse.ClasseByName;
 import static requeteBdd.requeteBddClasse.deleteClasse;
+import static requeteBdd.requeteBddClasse.displayEleveClasse;
 
 public class pageAccueil {
     public static ListView<String> listView = new ListView<>();
+    public static ListView<String> listView2 = new ListView<>();
 
     public static void display() throws SQLException, IOException, ClassNotFoundException {
         // New scene
@@ -78,18 +79,6 @@ public class pageAccueil {
             }
         });
 
-        /*Button bt3 = new Button("Modifier");
-        bt3.setStyle("-fx-background-color: #ff8e04; -fx-text-fill: white;");
-        Button bt4 = new Button("Afficher ");
-        bt4.setStyle("-fx-background-color: #3c9a1a; -fx-text-fill: white;");
-        Button bt5 = new Button("Supprimer");
-        bt5.setStyle("-fx-background-color: #ee3737; -fx-text-fill: white;");*/
-
-
-
-        //VBox vBox2 = new VBox(bt3,bt4,bt5);
-        /*vBox2.setSpacing(10);
-        vBox2.setLayoutX(700);*/
 
 
         Connection con = connexionBdd.connectionDB();
@@ -98,6 +87,9 @@ public class pageAccueil {
         bt2.setOnAction(e -> {
             try {
                 buttonClicked();
+                listView.getSelectionModel().clearSelection();
+                listView.getItems().clear();
+                requeteBddClasse.displayClasse(con, listView);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } catch (IOException ioException) {
@@ -105,27 +97,37 @@ public class pageAccueil {
             } catch (ClassNotFoundException classNotFoundException) {
                 classNotFoundException.printStackTrace();
             }
+
+        });
+        listView2.setVisible(false);
+        bt1.setOnAction(e -> {
+            try {
+                listView2.getSelectionModel().clearSelection();
+                listView2.getItems().clear();
+
+                buttonClickedDisplay();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException classNotFoundException) {
+                classNotFoundException.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
 
 
-        /*ListView<String> listView2 = new ListView<>();
-
-        listView2.getItems().add("Eleve 1");
-        listView2.getItems().add("Eleve  2");
-        listView2.getItems().add("Eleve  3");*/
-
         HBox hbox = new HBox(listView);
-        //HBox hbox2 = new HBox(listView2);
-        //hbox2.setLayoutX(400);
+        HBox hbox2 = new HBox(listView2);
+        hbox2.setLayoutX(400);
 
         secondaryStage.setScene(scene);
         secondaryStage.show();
 
         root.getChildren().add(hbox);
-        //root.getChildren().add(hbox2);
+        root.getChildren().add(hbox2);
         root.getChildren().add(vBox);
-        //root.getChildren().add(vBox2);
         secondaryStage.setScene(scene);
+        secondaryStage.setResizable(false);
         secondaryStage.setTitle("Bienvenue");
         secondaryStage.show();
 
@@ -137,6 +139,7 @@ public class pageAccueil {
         ObservableList<String> classes;
         Connection con = connexionBdd.connectionDB();
         classes = listView.getSelectionModel().getSelectedItems();
+
         for(String c: classes){
             message += c;
 
@@ -148,6 +151,23 @@ public class pageAccueil {
         deleteClasse(con, mes);
 
         System.out.println(message);
+
+    }
+
+    private static void buttonClickedDisplay() throws SQLException, ClassNotFoundException, IOException {
+        listView2.setVisible(true);
+        String message = "";
+        ObservableList<String> classes;
+        Connection con = connexionBdd.connectionDB();
+        classes = listView.getSelectionModel().getSelectedItems();
+
+        for(String c: classes){
+            message += c;
+        }
+
+        String mes = "\""+message+"\"";
+        System.out.println(mes);
+        displayEleveClasse(con,mes);
 
     }
 
