@@ -1,7 +1,9 @@
 Main.class
-requeteBdd.class
 Etudiant.class
 connexionBdd.class
 Administrateur.class
+requeteBdd\requeteBddEtudiant.class
+requeteBdd\requeteBddClasse.class
 Classe.class
 Controller.class
+requeteBdd\requeteBddAdministrateur.class

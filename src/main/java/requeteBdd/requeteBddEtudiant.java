@@ -1,7 +1,6 @@
 package requeteBdd;
 
 import java.sql.*;
-import java.util.Calendar;
 
 public class requeteBddEtudiant {
 

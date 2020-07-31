@@ -1,87 +1,115 @@
 
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import requeteBdd.requeteBddAdministrateur;
-import requeteBdd.requeteBddClasse;
-import requeteBdd.requeteBddEtudiant;
 
+import Vues.pageAccueil;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
+
 public class Main extends Application {
+
 
     @Override
     public void start(Stage primaryStage) throws Exception, SQLException {
-        Connection con = null;
-        GridPane root = new GridPane();
-        primaryStage.setTitle("Hello World");
 
-        try{
-            Properties prop = connexionBdd.loadPropertiesFiles();
-            String url = (String) prop.get("db.url");
-            String userName = (String) prop.get("db.userName");
-            String password = (String) prop.get("db.password");
-            String driver = (String) prop.get("db.driver");
+        //Creating Styling label email
+        Text emailText = new Text("Email :");
+        emailText.setFill(Color.BLACK);
+        emailText.setStyle("-fx-font: 17 arial;");
 
-            System.out.println("Driver : " + driver);
-            Class.forName(driver);
+        //Creating Styling label password
+        Text mdpText = new Text("Password :");
+        mdpText.setFill(Color.BLACK);
+        mdpText.setStyle("-fx-font: 17 arial;");
 
-            con = DriverManager.getConnection(url, userName, password);
+        //Creating TextField / PasswordField
+        TextField emailField = new TextField();
+        PasswordField mdpField = new PasswordField();
 
-            if(con !=null){
-                System.out.println("Connection créée");
+        //Creating Styling Buttons ok/annule
+        Button okBtn = new Button("   OK   ");
+        okBtn.setLayoutX(250);
+        okBtn.setLayoutY(150);
+        Button annulBtn = new Button("ANNULE");
+        annulBtn.setLayoutX(315);
+        annulBtn.setLayoutY(150);
 
-            }else {
-                System.out.println("Pas de connection");
-            }
+        //Creating a Grid Pane
+        GridPane gridPane = new GridPane();
 
-            ResultSet resultSet = requeteBddAdministrateur.displayDataAdministrateur(con);
-            System.out.println("ResultSet " + resultSet.getString("nom"));
-            Label label = new Label(resultSet.getString("nom"));
-            root.add(label,0,1);
+        //Setting size for the pane
+        gridPane.setMinSize(400, 200);
 
-            //SCRUD ELEVE
-            //requeteBdd.requeteBdd.addEleve(con, "test", "test", "test.test@gmail.com", 1);
-            //requeteBdd.requeteBdd.deleteEleve(con, 1);
-            //requeteBdd.requeteBdd.updateEleve(con, "Coucou", "Coucou", "coucou.cou@..", 3);
-            //requeteBddEtudiant.displayEleve(con);
+        //Setting the padding
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-            //CRUD CLASSE
-            //requeteBddClasse.displayClasse(con);
-            //requeteBddClasse.addClasse(con, "RIL");
-            //requeteBddClasse.deleteClasse(con, 1);
-            //requeteBddClasse.updateClasse(con, "Test", 2);
-            requeteBddClasse.displayEleveClasse(con, 2);
+        //Setting the vertical and horizontal gaps between the columns
+        gridPane.setVgap(5);
+        gridPane.setHgap(5);
 
-            connexionBdd.closeConnection(con);
+        //Setting the Grid alignment
+        gridPane.setAlignment(Pos.CENTER);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try{
-                if(con != null){
-                    con.close();
+        //Arranging all the nodes in the grid
+        gridPane.add(emailText, 0, 0);
+        gridPane.add(emailField, 1, 0);
+        gridPane.add(mdpText, 0, 1);
+        gridPane.add(mdpField, 1, 1);
+
+        // Styling Nodes/buttons
+        okBtn.setStyle("-fx-background-color: #528b3d; -fx-text-fill: white;");
+        annulBtn.setStyle("-fx-background-color: #bd4747; -fx-text-fill: white;");
+        emailField.setStyle("-fx-font: normal bold 20px 'serif' ");
+        mdpField.setStyle("-fx-font: normal bold 20px 'serif' ");
+        gridPane.setStyle("-fx-background-color: LIGHTGRAY;");
+
+        // Event button for login
+        okBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                try {
+                    connexionBdd.loginAction(e,emailField,mdpField);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
                 }
-            }catch (Exception ex){
-                ex.printStackTrace();
             }
-        }
+        });
+        //Creating root / scene
+        Group root = new Group();
+        Scene scene = new Scene(root, 400, 200, Color.LIGHTGRAY);
 
+        primaryStage.setTitle("Authentification");
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
 
+        root.getChildren().add(gridPane);
+        root.getChildren().add(okBtn);
+        root.getChildren().add(annulBtn);
 
-        primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
-    }
 
+    }
 
     public static void main(String[] args) {
         launch(args);
