@@ -1,6 +1,7 @@
 package requeteBdd;
 
 import Vues.pageModificationClasse;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -25,6 +26,27 @@ public class requeteBddClasse {
             id = rs.getString("id_classe");
             nom = rs.getString("nom");
             listView.getItems().add(nom);
+            // print the result
+            System.out.format("%s, %s\n", id, nom);
+        }
+        System.out.println("-------------------------------------------");
+        System.out.println(id + " " + nom);
+
+    }
+
+    public static void displayClasseCombo(Connection con, ComboBox<String> comboBox) throws SQLException, ClassNotFoundException{
+
+        String query = "SELECT * FROM classe";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+
+        String id = "";
+        String nom = "";
+        while (rs.next())
+        {
+            id = rs.getString("id_classe");
+            nom = rs.getString("nom");
+            comboBox.getItems().addAll(nom);
             // print the result
             System.out.format("%s, %s\n", id, nom);
         }
@@ -109,7 +131,7 @@ public class requeteBddClasse {
 
         while (rs.next())
         {
-            String nom = rs.getString("etudiant.nom");
+            String nom = rs.getString("etudiant.nom ");
             //String nomClasse = rs.getString("classe.nom");
 
             // print the result

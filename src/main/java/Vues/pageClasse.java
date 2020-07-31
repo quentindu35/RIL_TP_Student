@@ -1,6 +1,7 @@
 package Vues;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import requeteBdd.connexionBdd;
 import requeteBdd.requeteBddClasse;
+import requeteBdd.requeteBddEtudiant;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -43,19 +45,42 @@ public class pageClasse {
         btCancel.setStyle("-fx-background-color: #ff8e04; -fx-text-fill: white;");
         btCancel.setLayoutX(300);
 
+
+        TextField nomEtudiantField = new TextField();
+        nomEtudiantField.setLayoutX(100);
+        nomEtudiantField.setLayoutY(100);
+        TextField prenomEtudiantField = new TextField();
+        prenomEtudiantField.setLayoutX(200);
+        prenomEtudiantField.setLayoutY(100);
+        TextField mailEtudiantField = new TextField();
+        mailEtudiantField.setLayoutX(300);
+        mailEtudiantField.setLayoutY(100);
+
+        TextField mdpField = new TextField();
+        mdpField.setLayoutX(300);
+        mdpField.setLayoutY(100);
+
+        final ComboBox comboBox = new ComboBox();
+        requeteBddClasse.displayClasseCombo(connexionBdd.connectionDB(), comboBox);
+        comboBox.setLayoutX(400);
+        comboBox.setLayoutY(100);
+
         root.getChildren().add(btAdd);
         root.getChildren().add(btCancel);
         root.getChildren().add(nomField);
+        root.getChildren().addAll(nomEtudiantField, prenomEtudiantField, mailEtudiantField, mdpField, comboBox);
         Connection con = connexionBdd.connectionDB();
         btAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 try {
                     requeteBddClasse.addClasse(con, nomField);
+                    requeteBddEtudiant.addEleve(con, nomEtudiantField, prenomEtudiantField, mailEtudiantField, mdpField, "1");
                     connexionBdd.infoBox("La création a bien été prise en compte",null,"Ok");
                     Node n = (Node)e.getSource();
                     listView.getSelectionModel().clearSelection();
                     listView.getItems().clear();
                     requeteBddClasse.displayClasse(con, listView);
+                    requeteBddClasse.displayClasseCombo(con, comboBox);
                     addStage[0] = (Stage) n.getScene().getWindow();
                     addStage[0].close();
                 } catch (SQLException throwables) {
