@@ -1,7 +1,11 @@
 package requeteBdd;
 
 import Vues.pageModificationClasse;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
+
 
 import java.sql.*;
 
@@ -27,24 +31,25 @@ public class requeteBddClasse {
         }
         System.out.println("-------------------------------------------");
         System.out.println(id + " " + nom);
-        pageModificationClasse.display(id,nom);
 
     }
 
     public static void ClasseByName (Connection con, String nom) throws SQLException, ClassNotFoundException{
-
         String query = "SELECT * FROM classe WHERE nom = "+ nom;
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(query);
 
-
+        String id = "";
+        String nom2 = "";
         while (rs.next())
         {
-            String id = rs.getString("id_classe");
-            String nom2 = rs.getString("nom");
+            id = rs.getString("id_classe");
+            nom2 = rs.getString("nom");
             // print the result
             System.out.format("%s, %s\n", id, nom);
         }
+
+        pageModificationClasse.display(id,nom2);
 
 
     }

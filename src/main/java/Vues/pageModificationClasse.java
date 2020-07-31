@@ -24,7 +24,7 @@ public class pageModificationClasse {
     public static void display(String Id, String nomClasse) throws SQLException {
 
         // New scene
-        Stage secondaryStage = new Stage();
+        Stage thirdlyStage = new Stage();
         // New Grid
         GridPane root = new GridPane();
         // New Scene
@@ -75,9 +75,8 @@ public class pageModificationClasse {
         });
         root.add(bt,1,3);
 
-        secondaryStage.setScene(scene);
-        secondaryStage.setTitle("Bienvenue");
-        secondaryStage.show();
-
+        thirdlyStage.setScene(scene);
+        thirdlyStage.setTitle("Bienvenue");
+        thirdlyStage.show();
     }
 }
