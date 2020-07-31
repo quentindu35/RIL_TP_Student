@@ -45,6 +45,35 @@ public class pageAccueil {
         vBox.setSpacing(10);
         vBox.setLayoutX(300);
 
+        bt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                try {
+                    String message = "";
+
+                    ObservableList<String> classes;
+                    Connection con = connexionBdd.connectionDB();
+                    classes = listView.getSelectionModel().getSelectedItems();
+                    for(String c: classes){
+                        message += c;
+
+                        System.out.println(c);
+                    }
+
+                    String mes = "\""+message+"\"";
+                    System.out.println(mes);
+                    // deleteClasse(con, mes);
+                    ClasseByName(con,mes);
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                }
+            }
+        });
+
         bt1.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 System.out.println("DAO afficher tous les eleves d'une classe");
@@ -54,10 +83,7 @@ public class pageAccueil {
 
 
         Connection con = connexionBdd.connectionDB();
-
-
         requeteBddClasse.displayClasse(con, listView);
-
 
         bt2.setOnAction(e -> {
             try {
@@ -142,7 +168,6 @@ public class pageAccueil {
     }
 
     private static void buttonClickedDisplay() throws SQLException, ClassNotFoundException, IOException {
-
         listView2.setVisible(true);
         String message = "";
         ObservableList<String> classes;
@@ -156,7 +181,6 @@ public class pageAccueil {
         String mes = "\""+message+"\"";
         System.out.println(mes);
         displayEleveClasse(con,mes);
-
 
     }
 
