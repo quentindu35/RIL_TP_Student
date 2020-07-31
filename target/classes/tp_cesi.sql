@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 30 juil. 2020 à 11:04
+-- Généré le :  ven. 31 juil. 2020 à 15:05
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -36,7 +36,14 @@ CREATE TABLE IF NOT EXISTS `administrateur` (
   `mail` varchar(250) NOT NULL,
   `mdp` varchar(250) NOT NULL,
   PRIMARY KEY (`id_administrateur`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `administrateur`
+--
+
+INSERT INTO `administrateur` (`id_administrateur`, `nom`, `prenom`, `mail`, `mdp`) VALUES
+(2, 'Grosdoigt', 'Quentin', 'a', 'a');
 
 -- --------------------------------------------------------
 
@@ -49,7 +56,16 @@ CREATE TABLE IF NOT EXISTS `classe` (
   `id_classe` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
   PRIMARY KEY (`id_classe`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `classe`
+--
+
+INSERT INTO `classe` (`id_classe`, `nom`) VALUES
+(3, 'RISR 2019-2020'),
+(4, 'TOTO'),
+(5, 'TUTU');
 
 -- --------------------------------------------------------
 
@@ -63,10 +79,19 @@ CREATE TABLE IF NOT EXISTS `etudiant` (
   `nom` varchar(100) NOT NULL,
   `prenom` varchar(100) NOT NULL,
   `mail` varchar(100) NOT NULL,
+  `mdp` varchar(255) NOT NULL,
   `id_classe` int(11) NOT NULL,
   PRIMARY KEY (`id_etudiant`),
   KEY `id_classe` (`id_classe`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `etudiant`
+--
+
+INSERT INTO `etudiant` (`id_etudiant`, `nom`, `prenom`, `mail`, `mdp`, `id_classe`) VALUES
+(3, 'Grosdoigt', 'Quentin', 'quentin.grosdoigt@viacesi.fr', 'toto', 4),
+(4, 'tout', 'tout', 'tout', 'tou', 5);
 
 --
 -- Contraintes pour les tables déchargées
