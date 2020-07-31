@@ -1,5 +1,6 @@
 package requeteBdd;
 
+import Vues.pageModificationClasse;
 import javafx.scene.control.ListView;
 
 import java.sql.*;
@@ -12,12 +13,33 @@ public class requeteBddClasse {
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(query);
 
+        String id = "";
+        String nom = "";
+        while (rs.next())
+        {
+            id = rs.getString("id_classe");
+            nom = rs.getString("nom");
+            listView.getItems().add(nom);
+            // print the result
+            System.out.format("%s, %s\n", id, nom);
+        }
+        System.out.println("-------------------------------------------");
+        System.out.println(id + " " + nom);
+        pageModificationClasse.display(id,nom);
+
+    }
+
+    public static void ClasseByName (Connection con, String nom) throws SQLException, ClassNotFoundException{
+
+        String query = "SELECT * FROM classe WHERE nom = "+ nom;
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+
 
         while (rs.next())
         {
             String id = rs.getString("id_classe");
-            String nom = rs.getString("nom");
-            listView.getItems().add(nom);
+            String nom2 = rs.getString("nom");
             // print the result
             System.out.format("%s, %s\n", id, nom);
         }
@@ -59,13 +81,12 @@ public class requeteBddClasse {
 
     }
 
-    public static void updateClasse(Connection con, String nom, int id) throws SQLException, ClassNotFoundException{
-        String query = "Update classe set nom = ? where id_classe = ?";
+    public static void updateClasse(Connection con, String nom, String id) throws SQLException, ClassNotFoundException{
+        String query = "UPDATE classe SET nom = " + nom + " WHERE id_classe = ?";
 
         PreparedStatement preparedStmt = con.prepareStatement(query);
 
-        preparedStmt.setString(1, nom);
-        preparedStmt.setInt(2, id);
+        preparedStmt.setString(1, id);
         preparedStmt.executeUpdate();
 
         System.out.println("id : " + id + " mis à jour !");

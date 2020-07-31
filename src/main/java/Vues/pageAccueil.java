@@ -1,5 +1,6 @@
 package Vues;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -18,6 +19,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static requeteBdd.requeteBddClasse.ClasseByName;
 import static requeteBdd.requeteBddClasse.deleteClasse;
 
 public class pageAccueil {
@@ -36,19 +38,39 @@ public class pageAccueil {
         Button bt2 = new Button("Supprimer");
         bt2.setStyle("-fx-background-color: #ee3737; -fx-text-fill: white;");
 
-        bt.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                try {
-                    pageModificationClasse.display();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-            }
-        });
 
         VBox vBox = new VBox(bt,bt1,bt2);
         vBox.setSpacing(10);
         vBox.setLayoutX(300);
+
+        bt.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                try {
+                    String message = "";
+
+                    ObservableList<String> classes;
+                    Connection con = connexionBdd.connectionDB();
+                    classes = listView.getSelectionModel().getSelectedItems();
+                    for(String c: classes){
+                        message += c;
+
+                        System.out.println(c);
+                    }
+
+                    String mes = "\""+message+"\"";
+                    System.out.println(mes);
+                    // deleteClasse(con, mes);
+                    ClasseByName(con,mes);
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                }
+            }
+        });
 
         bt1.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
