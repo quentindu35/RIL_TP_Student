@@ -131,7 +131,7 @@ public class requeteBddClasse {
 
         while (rs.next())
         {
-            String nom = rs.getString("etudiant.nom ");
+            String nom = rs.getString("etudiant.nom");
             //String nomClasse = rs.getString("classe.nom");
 
             // print the result
